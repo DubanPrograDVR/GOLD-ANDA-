@@ -1,0 +1,99 @@
+
+.titulo-principal {
+    text-align: center;
+}
+
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 8px;
+}
+    
+.container-tunel-1 {
+    border-radius: 10px;
+    margin: 20px;
+    padding: 10px;
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+}
+
+.tarjeta-titulo-1 {
+    display: flex;
+    justify-content: space-between;
+    background-color: #a6a6a6;
+    padding: 10px;
+}
+
+.tarjeta-titulo-1 span {
+    padding: 5px;
+    border-radius: 10px;
+    background-color: gray;
+    color: #fff;
+    font-size: 13px;
+}
+
+.tarjeta-titulo-1 h3 {
+  color: #fff;
+}
+
+.informacion-contenedor {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px;
+    gap: 20px;
+    background-color: #000000;
+}
+
+.elementos-izquierda,
+.elementos-derecha {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}
+
+.elementos-izquierda {
+    align-self: flex-start;
+}
+
+.elementos-derecha {
+    align-self: flex-end;
+}
+
+
+.btn {
+    align-self: flex-end;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 13px;
+    padding: 7px;
+    margin-top: 20px;
+    background-color: #a6a6a6;
+}
+
+
+.tarjeta-tunel {
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    grid-column-start: 1;
+    grid-row-start: 4;
+}
+
+.div6 {
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    grid-column-start: 4;
+    grid-row-start: 1;
+}
+
+.div7 {
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    grid-column-start: 4;
+    grid-row-start: 4;
+}
+        
