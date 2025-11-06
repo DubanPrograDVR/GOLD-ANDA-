@@ -8,6 +8,14 @@ const Tarjetas = () => {
     navigate(`/ingreso/${tunelNumero}`);
   };
 
+  const handleVerFolios = (tunelNumero: number) => {
+    navigate(`/folios/${tunelNumero}`);
+  };
+
+  const handleAgregarFolio = (tunelNumero: number) => {
+    navigate(`/agregar-folio/${tunelNumero}`);
+  }
+
   return (
     <>
       <h1 className="titulo-principal">Panel de Tuneles</h1>
@@ -60,7 +68,7 @@ const Tarjetas = () => {
                 </ul>
               </div>
               <div className="botones-contenedor">
-                <button className="btn-verde">Ver folios</button>
+                <button className="btn-verde" onClick={() => handleVerFolios(2)}>Ver folios</button>
                 <button className="btn-verde" onClick={() => handleNuevoIngreso(2)}>Nuevo Ingreso</button>
               </div>
             </div>
@@ -88,7 +96,7 @@ const Tarjetas = () => {
                 </ul>
               </div>
               <div className="botones-contenedor">
-                <button className="btn-verde">Ver folios</button>
+                <button className="btn-verde" onClick={() => handleVerFolios(3)}>Ver folios</button>
                 <button className="btn-verde" onClick={() => handleNuevoIngreso(3)}>Nuevo Ingreso</button>
               </div>
             </div>
@@ -116,8 +124,8 @@ const Tarjetas = () => {
                 </ul>
               </div>
               <div className="botones-contenedor">
-                <button className="btn-naranja">Ver folios</button>
-                <button className="btn-naranja">+ Folio</button>
+                <button className="btn-naranja" onClick={() => handleVerFolios(4)}>Ver folios</button>
+                <button className="btn-naranja" onClick={() => handleAgregarFolio(4)}>+ Folio</button>
               </div>
             </div>
           </div>
