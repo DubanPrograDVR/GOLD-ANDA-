@@ -1,9 +1,14 @@
 import Navbar from "../Navbar";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./styles/TablasFolio.css";
 
 const TablasFolio = () => {
     const { tunelNumero } = useParams<{ tunelNumero: string }>();
+    const navigate = useNavigate();
+
+    const handleEditTemperatura = (folioNumero: string) => {
+        navigate(`/temperatura/${folioNumero}`);
+    };
 
     // Datos de ejemplo para la tabla
     const folios = [
@@ -52,7 +57,7 @@ const TablasFolio = () => {
                                     <td>{folio.tempExterna}</td>
                                     <td>{folio.tempInterna}</td>
                                     <td>
-                                        <button className="edit-btn">
+                                        <button className="edit-btn" onClick={() => handleEditTemperatura(folio.id)}>
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                                                 <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
                                             </svg>

@@ -13,13 +13,15 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  
+
   const handleHomeClick = () => {
     navigate("/");
     setIsMenuOpen(false);
   };
 
   const handleHistoricoClick = () => {
-    
+    navigate("/historico");
     setIsMenuOpen(false);
   };
 
