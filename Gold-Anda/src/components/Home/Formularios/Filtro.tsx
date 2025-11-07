@@ -5,14 +5,16 @@ import "./styles/Filtro.css";
 
 interface FiltroProps {
   onFilterChange?: (filtros: string[]) => void;
+  filtrosDisponibles?: string[];
 }
 
-const Filtro = ({ onFilterChange }: FiltroProps) => {
+const Filtro = ({ onFilterChange, filtrosDisponibles }: FiltroProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const filtroRef = useRef<HTMLDivElement>(null);
 
-  const filtrosDisponibles = [
+  // Filtros por defecto (para el componente Historico)
+  const filtrosPorDefecto = [
     "Numero de tunel",
     "Exportadora",
     "Embalaje",
@@ -23,6 +25,9 @@ const Filtro = ({ onFilterChange }: FiltroProps) => {
     "T° Interna",
     "T° Externa"
   ];
+
+  // Usar filtros personalizados o los por defecto
+  const filtrosActivos = filtrosDisponibles || filtrosPorDefecto;
 
   // Cerrar dropdown al hacer clic fuera
   useEffect(() => {
@@ -87,7 +92,7 @@ const Filtro = ({ onFilterChange }: FiltroProps) => {
                 </button>
               )}
             </div>
-            {filtrosDisponibles.map((filtro, index) => (
+            {filtrosActivos.map((filtro, index) => (
               <div key={index} className="filtro-option">
                 <input
                   type="checkbox"

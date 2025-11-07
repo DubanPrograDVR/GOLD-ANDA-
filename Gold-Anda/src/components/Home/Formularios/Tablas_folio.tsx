@@ -1,27 +1,120 @@
 import Navbar from "../Navbar";
+import Filtro from "./Filtro";
 import { useParams, useNavigate } from "react-router-dom";
+import { useState, useMemo } from "react";
 import "./styles/TablasFolio.css";
 
 const TablasFolio = () => {
     const { tunelNumero } = useParams<{ tunelNumero: string }>();
     const navigate = useNavigate();
+    const [filtrosSeleccionados, setFiltrosSeleccionados] = useState<string[]>([]);
 
     const handleEditTemperatura = (folioNumero: string) => {
         navigate(`/temperatura/${folioNumero}`);
+    };
+
+    // Filtros específicos para folios
+    const filtrosFolios = [
+        "N° de Folio",
+        "Exportadora",
+        "Embalaje",
+        "Variedad",
+        "T° Inicial",
+        "T° Externa",
+        "T° Interna"
+    ];
+
+    // Mapeo de nombres de filtros a propiedades del objeto
+    const filtroMapping: Record<string, keyof typeof folios[0]> = {
+        "N° de Folio": "id",
+        "Exportadora": "exportadora",
+        "Embalaje": "embalaje",
+        "Variedad": "variedad",
+        "T° Inicial": "tempInicial",
+        "T° Externa": "tempExterna",
+        "T° Interna": "tempInterna"
     };
 
     // Datos de ejemplo para la tabla
     const folios = [
         {
             id: "0000000012",
-            exportadora: "Maquelhua",
+            exportadora: "Maquehua",
             embalaje: "EMB25A",
             variedad: "Santina",
             tempInicial: "0.2°C",
             tempExterna: "0.3°C",
             tempInterna: "0.1°C"
+        },
+        {
+            id: "0000000013",
+            exportadora: "AquaChile S.A.",
+            embalaje: "EMB30B",
+            variedad: "Premium",
+            tempInicial: "0.5°C",
+            tempExterna: "0.4°C",
+            tempInterna: "0.2°C"
+        },
+        {
+            id: "0000000014",
+            exportadora: "Marine Harvest Chile",
+            embalaje: "EMB20C",
+            variedad: "Superior",
+            tempInicial: "0.3°C",
+            tempExterna: "0.2°C",
+            tempInterna: "0.1°C"
+        },
+        {
+            id: "0000000015",
+            exportadora: "Salmones Camanchaca",
+            embalaje: "EMB35A",
+            variedad: "Estándar",
+            tempInicial: "0.4°C",
+            tempExterna: "0.5°C",
+            tempInterna: "0.3°C"
+        },
+        {
+            id: "0000000016",
+            exportadora: "Blumar Seafoods",
+            embalaje: "EMB28D",
+            variedad: "Export",
+            tempInicial: "0.6°C",
+            tempExterna: "0.3°C",
+            tempInterna: "0.2°C"
         }
     ];
+
+    // Función para manejar cambios en los filtros
+    const handleFilterChange = (nuevosFiltros: string[]) => {
+        setFiltrosSeleccionados(nuevosFiltros);
+    };
+
+    // Datos filtrados basados en las columnas seleccionadas
+    const foliosFiltrados = useMemo(() => {
+        if (filtrosSeleccionados.length === 0) {
+            return folios; // Si no hay filtros seleccionados, mostrar todos los datos
+        }
+
+        // Crear un objeto con solo las propiedades seleccionadas
+        return folios.map(folio => {
+            const folioFiltrado: any = {};
+            filtrosSeleccionados.forEach(filtro => {
+                const propiedad = filtroMapping[filtro];
+                if (propiedad) {
+                    folioFiltrado[propiedad] = folio[propiedad];
+                }
+            });
+            return { ...folio, ...folioFiltrado };
+        });
+    }, [filtrosSeleccionados, folios]);
+
+    // Determinar qué columnas mostrar
+    const columnasVisibles = useMemo(() => {
+        if (filtrosSeleccionados.length === 0) {
+            return Object.keys(filtroMapping); // Mostrar todas las columnas
+        }
+        return filtrosSeleccionados;
+    }, [filtrosSeleccionados]);
 
     return (
         <>
@@ -32,30 +125,32 @@ const TablasFolio = () => {
                     <span className="tunel-badge">Túnel: {tunelNumero}</span>
                 </div>
 
+                <Filtro 
+                    filtrosDisponibles={filtrosFolios}
+                    onFilterChange={handleFilterChange}
+                />
+
                 <div className="tabla-container">
                     <table className="folios-table">
                         <thead>
                             <tr>
-                                <th>N° de Folio</th>
-                                <th>Exportadora</th>
-                                <th>Embalaje</th>
-                                <th>Variedad</th>
-                                <th>T° Inicial</th>
-                                <th>T° Externa</th>
-                                <th>T° Interna</th>
-                                <th></th>
+                                {columnasVisibles.map((columna) => (
+                                    <th key={columna}>{columna}</th>
+                                ))}
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {folios.map((folio, index) => (
+                            {foliosFiltrados.map((folio, index) => (
                                 <tr key={folio.id} className={index % 2 === 0 ? "row-light" : "row-dark"}>
-                                    <td>{folio.id}</td>
-                                    <td>{folio.exportadora}</td>
-                                    <td>{folio.embalaje}</td>
-                                    <td>{folio.variedad}</td>
-                                    <td>{folio.tempInicial}</td>
-                                    <td>{folio.tempExterna}</td>
-                                    <td>{folio.tempInterna}</td>
+                                    {columnasVisibles.map((columna) => {
+                                        const propiedad = filtroMapping[columna];
+                                        return (
+                                            <td key={`${folio.id}-${columna}`}>
+                                                {propiedad ? folio[propiedad] : ""}
+                                            </td>
+                                        );
+                                    })}
                                     <td>
                                         <button className="edit-btn" onClick={() => handleEditTemperatura(folio.id)}>
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -66,15 +161,11 @@ const TablasFolio = () => {
                                 </tr>
                             ))}
                             {/* Filas vacías para completar la tabla */}
-                            {[...Array(4)].map((_, index) => (
-                                <tr key={`empty-${index}`} className={(index + 1) % 2 === 0 ? "row-light" : "row-dark"}>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                            {[...Array(Math.max(0, 4 - foliosFiltrados.length))].map((_, index) => (
+                                <tr key={`empty-${index}`} className={(foliosFiltrados.length + index) % 2 === 0 ? "row-light" : "row-dark"}>
+                                    {columnasVisibles.map((columna) => (
+                                        <td key={`empty-${index}-${columna}`}></td>
+                                    ))}
                                     <td></td>
                                 </tr>
                             ))}
