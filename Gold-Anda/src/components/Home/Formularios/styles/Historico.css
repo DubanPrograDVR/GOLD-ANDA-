@@ -110,7 +110,7 @@
 .pagination-btn {
     background: none;
     border: none;
-    color: #fff;
+    color: #000;
     cursor: pointer;
     padding: 8px;
     border-radius: 4px;
@@ -121,7 +121,7 @@
 }
 
 .pagination-btn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .pagination-btn:disabled {
@@ -137,7 +137,7 @@
 .page-btn {
     background: none;
     border: none;
-    color: #fff;
+    color: #000;
     cursor: pointer;
     padding: 8px 12px;
     border-radius: 4px;
@@ -147,7 +147,7 @@
 }
 
 .page-btn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .page-btn.active {
