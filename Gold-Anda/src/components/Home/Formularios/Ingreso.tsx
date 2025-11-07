@@ -10,7 +10,7 @@ const Ingreso = () => {
         <Navbar />
         <div className="ingreso-container">
             <div className="ingreso-header">
-                <h1>Nuevo Ingreso</h1>
+                <h1 style={{textDecoration:"underline 3px #ef9d40 ", fontWeight:400}}>Nuevo Ingreso</h1>
                 <span className="tunel-badge">Túnel: {tunelNumero}</span>
             </div>
             

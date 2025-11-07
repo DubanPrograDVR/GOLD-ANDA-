@@ -18,7 +18,7 @@ const Tarjetas = () => {
 
   return (
     <>
-      <h1 className="titulo-principal" style={{paddingTop: "20px",textDecoration:"underline"}}>Panel de Tuneles</h1>
+      <h1 className="titulo-principal" style={{paddingTop: "20px",textDecoration:"underline 3px #ef9d40",fontSize:"35px",fontWeight:400}}>Panel de Tuneles</h1>
 
       <div className="parent">
         <div className="container-tunel-1">
