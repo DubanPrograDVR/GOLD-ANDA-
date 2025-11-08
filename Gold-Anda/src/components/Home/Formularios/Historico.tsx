@@ -178,10 +178,11 @@ const Historico = () => {
       <Filtro onFilterChange={handleFilterChange} />
 
       <div className="folios-container">
+        <div className="folios-header">
+          <h1>Histórico</h1>
+        </div>
+        
         <div className="tabla-container">
-          <div className="folios-header">
-            <h1>Historico</h1>
-          </div>
           <table className="folios-table">
             <thead>
               <tr>
@@ -213,9 +214,26 @@ const Historico = () => {
                 >
                   {columnasVisibles.map((columna) => {
                     const propiedad = filtroMapping[columna];
+                    const valor = propiedad ? folio[propiedad] : "";
+                    
+                    // Determinar el tipo de dato para aplicar estilos especiales
+                    let dataType = "";
+                    if (columna.includes("T°") || valor.includes("°C")) {
+                      dataType = "temperature";
+                    } else if (columna === "Fecha") {
+                      dataType = "date";
+                    } else if (columna === "Hora") {
+                      dataType = "time";
+                    } else if (columna === "Duración") {
+                      dataType = "duration";
+                    }
+                    
                     return (
-                      <td key={`${folio.folio}-${columna}`}>
-                        {propiedad ? folio[propiedad] : ""}
+                      <td 
+                        key={`${folio.folio}-${columna}`}
+                        data-type={dataType}
+                      >
+                        {valor}
                       </td>
                     );
                   })}
